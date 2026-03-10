@@ -1,3 +1,4 @@
+
 import requests
 import schedule
 import time
@@ -21,7 +22,7 @@ def enviar_recordatorio():
     mexico = pytz.timezone("America/Mexico_City")
     ahora = datetime.now(mexico)
 
-    # Verificar que sean exactamente las 5:55 PM
+    # Verificar día y hora
     if not (ahora.hour == 17 and ahora.minute == 55):
         return
 
@@ -34,7 +35,7 @@ def enviar_recordatorio():
     MENSAJE = f"""*Recordatorio*
 
 Hola equipo
-Recuerden que hoy es el turno de *{nombre}* 
+Recuerden que hoy es el turno de *{nombre}*
 
 ¡Buenas tardes!"""
 
@@ -47,9 +48,7 @@ Recuerden que hoy es el turno de *{nombre}*
         print(f"❌ Error: {response.text}")
 
 # --- SCHEDULER (revisa cada minuto) ---
-schedule.every().monday.do(enviar_recordatorio)
-schedule.every().tuesday.do(enviar_recordatorio)
-schedule.every().thursday.do(enviar_recordatorio)
+schedule.every(1).minutes.do(enviar_recordatorio)
 
 print("🤖 Bot activo — esperando lunes, martes o jueves a las 5:55 PM México...")
 
